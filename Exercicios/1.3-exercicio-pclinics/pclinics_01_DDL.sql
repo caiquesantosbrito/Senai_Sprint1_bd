@@ -1,0 +1,49 @@
+--DDL
+
+CREATE DATABASE  Clinicas;
+
+Use Clinicas;
+
+CREATE TABLE Clinicas
+(
+	idClinica		INT PRIMARY KEY IDENTITY,
+	Endereco		VARCHAR(200),
+);
+CREATE TABLE Veterinarios
+(
+	idVeterinario	INT PRIMARY KEY IDENTITY,
+	idClinica		INT FOREIGN KEY REFERENCES Clinicas(idClinica),
+	Nome			VARCHAR(200),
+);
+CREATE TABLE Tipos
+(
+	idTipo			INT PRIMARY KEY IDENTITY,
+	Tipo			VARCHAR(200)
+);
+CREATE TABLE Racas
+(
+	idRaca			INT PRIMARY KEY IDENTITY,
+	idTipo			INT FOREIGN KEY REFERENCES Tipos(idTipo),
+	Raca			VARCHAR(200)
+);
+CREATE TABLE Donos
+(
+	idDono			INT PRIMARY KEY IDENTITY,
+	Dono			VARCHAR(200)
+);
+CREATE TABLE Pets
+(
+	idPet			INT PRIMARY KEY IDENTITY,
+	idDono			INT FOREIGN KEY REFERENCES Donos(idDono),
+	idRaca			INT FOREIGN KEY REFERENCES Racas(idRaca),
+	Nome			VARCHAR(200),
+);
+CREATE TABLE Atendimentos
+(
+	idAtendimento	INT PRIMARY KEY IDENTITY,
+	idPet			INT FOREIGN KEY REFERENCES Pets(idPet),
+	idVeterinario	INT FOREIGN KEY REFERENCES Veterinarios(idVeterinario),
+	Data_			DATE NOT NULL,
+	HoraInicio		DATETIME NOT NULL,
+	HoraFim			DATETIME NOT NULL
+);
